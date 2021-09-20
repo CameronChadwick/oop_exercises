@@ -1,3 +1,5 @@
+import math
+
 class Rocket():
     def __init__(self, y_loc, x_loc):
         self.x_loc = x_loc
@@ -7,26 +9,19 @@ class Rocket():
         self.x_loc += move_x
         self.y_loc += move_y
 
-    def get_distance(self, rocket1_y, rocket2_y, rocket1_x, rocket2_x):
-        self.y_dist = rocket1_y - rocket2_y
-        self.x_dist = rocket1_x - rocket2_x
+    def get_distance(self, rocket1_y,rocket1_x):
+        y_dist = (rocket1_y - self.y_loc)**2
+        x_dist = (rocket1_x - self.x_loc)**2
+        dist = math.sqrt(x_dist+y_dist)
+        return dist
 
 print("Rocket Distances")
 
 rocketdist = Rocket(0,0)
 
-rocketdist.get_distance(100,85,75,50)
-print(rocketdist.y_dist, rocketdist.x_dist)
+newdist = rocketdist.get_distance(0,100)
+print(newdist)
 
-rocketdist = Rocket(0,0)
-
-rocketdist.get_distance(150,85,50,0)
-print(rocketdist.y_dist, rocketdist.x_dist)
-
-rocketdist = Rocket(0,0)
-
-rocketdist.get_distance(732,100,75,47)
-print(rocketdist.y_dist, rocketdist.x_dist)
 
 print()
 
@@ -108,14 +103,22 @@ class Rocket():
         self.x_pos = 0
         self.y_pos = 0
 
+    def get_distance(self, rocket1_x,rocket1_y):
+        y_dist = (rocket1_y - self.y_loc)**2
+        x_dist = (rocket1_x - self.x_loc)**2
+        dist = math.sqrt(x_dist+y_dist)
+        return dist
 
-rocket3 = Rocket(0,0)
+    def safety_check(self,rocketx,rockety):
+        current_dist = self.get_distance(rocketx,rockety)
+        if current_dist < 50:
+            print("Rockets are too close")
+        else:
+            print("Rockets at safe distance")
 
-rocket3.launch()
-rocket3.travel(247,7378)
-print(rocket3.x_pos, rocket3.y_pos)
 
-print()
+rocket4 = Rocket(0,0)
 
-rocket3.land_rocket()
-print(rocket3.x_pos, rocket3.y_pos)
+rocket5 = Rocket(0,100)
+
+rocket4.safety_check(rocket5.x_pos,rocket5.y_pos)
